@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>InteractiveDataDisplay.WPF</RootNamespace>
     <AssemblyName>InteractiveDataDisplay.WPF</AssemblyName>
-    <TargetFrameworks>net452;net46</TargetFrameworks>
+    <TargetFrameworks>net452;</TargetFrameworks>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -69,6 +69,5 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Maps.MapControl.WPF" Version="1.0.0.3" />
     <PackageReference Include="System.Reactive" Version="3.1.1" Condition=" '$(TargetFramework)' == 'net452' " />
-    <PackageReference Include="System.Reactive" Version="4.0.0" Condition=" '$(TargetFramework)' == 'net46' " />
   </ItemGroup>
 </Project>

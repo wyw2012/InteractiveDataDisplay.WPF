@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Windows.Markup;
 using System.ComponentModel;
 using System.Windows.Data;
+using System;
 
 namespace InteractiveDataDisplay.WPF
 {
@@ -17,14 +18,15 @@ namespace InteractiveDataDisplay.WPF
     [Description("Ready to use figure")]
     public class Chart : ContentControl
     {
+        private AxisGrid axisGrid;
         /// <summary>
         /// Initializes a new instance of <see cref="Chart"/> class.
         /// </summary>
         public Chart()
         {
             DefaultStyleKey = typeof(Chart);
-            Background = new SolidColorBrush(Colors.White);
-            Foreground = new SolidColorBrush(Colors.Black);
+            Background =  Brushes.White;
+            Foreground =  Brushes.Black;
             LegendContent = new LegendItemsPanel();
         }
 
@@ -33,11 +35,17 @@ namespace InteractiveDataDisplay.WPF
             base.OnApplyTemplate();
             PlotAxis plotAxis = base.GetTemplateChild("PART_horizontalAxis") as PlotAxis;
             PlotAxis plotAxis2 = base.GetTemplateChild("PART_verticalAxis") as PlotAxis;
-            AxisGrid axisGrid = base.GetTemplateChild("PART_axisGrid") as AxisGrid;
+            axisGrid = base.GetTemplateChild("PART_axisGrid") as AxisGrid;
             if (plotAxis == null || plotAxis2 == null || axisGrid == null)
             {
                 return;
             }
+            if(IsShowCoordinateValue)
+            {
+                axisGrid.MouseMove -= AxisGrid_MouseMove;
+                axisGrid.MouseMove += AxisGrid_MouseMove;
+            }
+   
             BindingOperations.SetBinding(axisGrid, AxisGrid.HorizontalTicksProperty, new Binding("Ticks")
             {
                 Source = plotAxis
@@ -327,6 +335,77 @@ namespace InteractiveDataDisplay.WPF
             get { return (bool)GetValue(IsYAxisReversedProperty); }
             set { SetValue(IsYAxisReversedProperty, value); }
         }
+
+
+        /// <summary>
+        /// Show coordinate value when mouse hover on AxisGrid
+        /// </summary>
+        [Category("InteractiveDataDisplay")]
+        public bool IsShowCoordinateValue
+        {
+            get { return (bool)GetValue(IsShowCoordinateValueProperty); }
+            set { SetValue(IsShowCoordinateValueProperty, value); }
+        }
+        /// <summary>
+        /// Identifies <see cref="IsShowCoordinateValue"/> dependency property
+        /// </summary>
+        public static readonly DependencyProperty IsShowCoordinateValueProperty =
+            DependencyProperty.Register("IsShowCoordinateValue", typeof(bool), typeof(Chart), new PropertyMetadata(false,
+                (o, e) =>
+                {
+                    Chart chart = (Chart)o;
+                    if (chart != null)
+                    {
+                        chart.IsShowCoordinateValueChanged(e);
+                    }
+                }));
+
+        private void IsShowCoordinateValueChanged(DependencyPropertyChangedEventArgs e)
+        {
+            if((bool)e.NewValue)
+            {
+                if(axisGrid!=null)
+                {
+                    axisGrid.MouseMove -= AxisGrid_MouseMove;
+                    axisGrid.MouseMove += AxisGrid_MouseMove;
+                }
+            }
+            else
+            {
+                axisGrid.MouseMove -= AxisGrid_MouseMove;
+            }
+        }
+
+        private void AxisGrid_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            var cursorPostion = e.GetPosition(axisGrid);
+            var ratioX = cursorPostion.X / axisGrid.ActualWidth;
+            var ratioY = cursorPostion.Y / axisGrid.ActualHeight;
+            CoordinateX = PlotWidth * ratioX + PlotOriginX;
+            CoordinateY = PlotHeight * (1 - ratioY) + PlotOriginY; // OriginY is in left bottom, so is (1 - ratioY)
+        }
+
+        internal double CoordinateX
+        {
+            get { return (double)GetValue(CoordinateXProperty); }
+            set { SetValue(CoordinateXProperty, value); }
+        }
+
+        internal static readonly DependencyProperty CoordinateXProperty =
+            DependencyProperty.Register("CoordinateX", typeof(double), typeof(Chart), new PropertyMetadata(default(double)));
+
+
+
+        internal double CoordinateY
+        {
+            get { return (double)GetValue(CoordinateYProperty); }
+            set { SetValue(CoordinateYProperty, value); }
+        }
+
+        internal static readonly DependencyProperty CoordinateYProperty =
+            DependencyProperty.Register("CoordinateY", typeof(double), typeof(Chart), new PropertyMetadata(default(double)));
+
+
 
     }       
 }

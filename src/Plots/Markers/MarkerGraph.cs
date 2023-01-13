@@ -500,9 +500,9 @@ namespace InteractiveDataDisplay.WPF
         /// </summary>
         public static readonly DependencyProperty StrokeProperty =
             DependencyProperty.Register("Stroke",
-                typeof(SolidColorBrush),
+                typeof(Brush),
                 typeof(MarkerGraph),
-                new PropertyMetadata(new SolidColorBrush(Colors.Black), OnStrokePropertyChanged));
+                new PropertyMetadata(Brushes.Black, OnStrokePropertyChanged));
 
         private static void OnStrokePropertyChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -518,9 +518,9 @@ namespace InteractiveDataDisplay.WPF
         /// <para>Default value is black color.</para>
         /// </summary>
         [Category("Appearance")]
-        public SolidColorBrush Stroke
+        public Brush Stroke
         {
-            get { return (SolidColorBrush)GetValue(StrokeProperty); }
+            get { return (Brush)GetValue(StrokeProperty); }
             set { SetValue(StrokeProperty, value); }
         }
 

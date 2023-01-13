@@ -31,22 +31,22 @@ var y = x.Select(v => Math.Abs(v) < 1e-10 ? 1 : Math.Sin(v) / v).ToArray();
 ````
 We will receive:
 
-<img src="/images/sinline.PNG" align="center" height="300" width="415" margin="auto">
+<img src="/screenshots/sinline.PNG" align="center" height="300" width="415" margin="auto">
 
 Other Interactive Data Display samples:
 
-<img src="/images/line.PNG" align="left" height="300" width="415" >
-<img src="/images/markers.PNG" align="left" height="300" width="415" >
-<img src="/images/heatmap.PNG" align="left" height="300" width="415" >
-<img src="/images/barchart.PNG" align="left" height="300" width="415" >
-<img src="/images/map.PNG" align="center" height="300" width="415" margin="auto">
+<img src="/screenshots/line.PNG" align="left" height="300" width="415" >
+<img src="/screenshots/markers.PNG" align="left" height="300" width="415" >
+<img src="/screenshots/heatmap.PNG" align="left" height="300" width="415" >
+<img src="/screenshots/barchart.PNG" align="left" height="300" width="415" >
+<img src="/screenshots/map.PNG" align="center" height="300" width="415" margin="auto">
 
-See the source code [here](https://github.com/Microsoft/InteractiveDataDisplay.WPF/tree/master/samples).
+See the source code [here](https://github.com/wyw2012/InteractiveDataDisplay.WPF/tree/master/samples).
 
 Licensing
 ---------
 
-Interactive Data Display for WPF is under the [MIT license](https://github.com/Microsoft/InteractiveDataDisplay.WPF/blob/master/LICENSE).
+Interactive Data Display for WPF is under the [MIT license](https://github.com/wyw2012/InteractiveDataDisplay.WPF/blob/master/LICENSE).
 
 Other 
 -----

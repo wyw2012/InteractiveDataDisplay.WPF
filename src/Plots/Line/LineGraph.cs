@@ -37,7 +37,7 @@ namespace InteractiveDataDisplay.WPF
             LineGraph linePlot = (LineGraph)d;
             if (linePlot != null)
             {
-                InteractiveDataDisplay.WPF.Plot.SetPoints(linePlot.polyline, (PointCollection)e.NewValue);
+                SetPoints(linePlot.polyline, (PointCollection)e.NewValue);
             }
         }
 
@@ -48,7 +48,7 @@ namespace InteractiveDataDisplay.WPF
         {
             polyline = new Polyline 
             { 
-                Stroke = new SolidColorBrush(Colors.Black),
+                Stroke =  Brushes.Black,
                 StrokeLineJoin = PenLineJoin.Round
             };
 
@@ -184,7 +184,7 @@ namespace InteractiveDataDisplay.WPF
            DependencyProperty.Register("Stroke",
            typeof(Brush),
            typeof(LineGraph),
-           new PropertyMetadata(new SolidColorBrush(Colors.Black), OnStrokeChanged));
+           new PropertyMetadata(Brushes.Black, OnStrokeChanged));
 
         private static void OnStrokeChanged(object target, DependencyPropertyChangedEventArgs e)
         {
@@ -256,20 +256,5 @@ namespace InteractiveDataDisplay.WPF
         }
         #endregion
     }
-
-    internal class LineGraphThicknessConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            double thickness = (double)value;
-            return new Thickness(thickness / 2.0);
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
 }
 

@@ -6,6 +6,7 @@
     xmlns:d3="clr-namespace:InteractiveDataDisplay.WPF">
 
     <d3:CountToVisibilityConverter x:Key="CountToVisibilityConverter"/>
+    <d3:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     
     <Style TargetType="d3:PlotAxis">
         <Setter Property="Template">
@@ -26,6 +27,7 @@
     </Style>
 
     <Style TargetType="d3:Chart">
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="d3:Chart">
@@ -59,11 +61,13 @@
                                 <d3:MouseNavigation IsHorizontalNavigationEnabled="False"/>
                             </d3:PlotAxis>
                             <d3:AxisGrid x:Name="PART_axisGrid"
+                                         SnapsToDevicePixels="True"
                                          VerticalTicks="{Binding Ticks,ElementName=PART_verticalAxis, Mode=OneWay}"
                                          HorizontalTicks="{Binding Ticks,ElementName=PART_horizontalAxis, Mode=OneWay}"
                                          IsXAxisReversed = "{Binding IsXAxisReversed, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                          IsYAxisReversed = "{Binding IsXAxisReversed, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                         Stroke="{TemplateBinding Foreground}" Opacity="0.25"/>
+                                         Stroke="{TemplateBinding Foreground}" Opacity="0.15"
+                                         Background="{TemplateBinding Background}"/>
                             <ContentControl d3:Figure.Placement="Top" 
                                             HorizontalAlignment="Center"
                                             FontSize="16"
@@ -92,6 +96,11 @@
                             <d3:Legend x:Name="PART_legend" 
                                        Foreground="Black" Content="{TemplateBinding LegendContent}"
                                        Visibility="{TemplateBinding LegendVisibility}"/>
+                            <StackPanel Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                        Visibility="{Binding IsShowCoordinateValue,RelativeSource={RelativeSource AncestorType=d3:Chart},Converter={StaticResource BoolToVisibilityConverter}}">
+                                <TextBlock Text="{Binding CoordinateX,RelativeSource={RelativeSource AncestorType=d3:Chart},StringFormat={}X \= {0:f3}}"/>
+                                <TextBlock Text="{Binding CoordinateY,RelativeSource={RelativeSource AncestorType=d3:Chart},StringFormat={}Y \= {0:f3}}"/>
+                            </StackPanel>
                         </d3:Figure>
                         <Rectangle x:Name="FocusVisualElement" RadiusX="2" RadiusY="2" Stroke="#FF6DBDD1" StrokeThickness="1" Opacity="0" IsHitTestVisible="false" />
                     </Grid>

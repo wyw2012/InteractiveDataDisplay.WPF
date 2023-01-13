@@ -4,12 +4,12 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Data;
 using System.ComponentModel;
+using System.Windows.Media;
 
 namespace InteractiveDataDisplay.WPF
 {
@@ -200,16 +200,16 @@ namespace InteractiveDataDisplay.WPF
         /// <remarks>The default foreground is black</remarks>
         [Category("Appearance")]
         [Description("Brush for labels and ticks")]
-        public SolidColorBrush Foreground
+        public Brush Foreground
         {
-            get { return (SolidColorBrush)GetValue(ForegroundProperty); }
+            get { return (Brush)GetValue(ForegroundProperty); }
             set { SetValue(ForegroundProperty, value); }
         }
         /// <summary>
         /// Identifies the <see cref="Foreground"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty ForegroundProperty =
-            DependencyProperty.Register("Foreground", typeof(SolidColorBrush), typeof(Axis), new PropertyMetadata(new SolidColorBrush(Colors.Black)));
+            DependencyProperty.Register("Foreground", typeof(Brush), typeof(Axis), new PropertyMetadata(Brushes.Black));
 
         /// <summary>
         /// Gets or sets the maximum possible count of ticks.

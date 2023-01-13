@@ -1,0 +1,27 @@
+﻿<Window x:Class="CoordinateGraphSample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d3="clr-namespace:InteractiveDataDisplay.WPF;assembly=InteractiveDataDisplay.WPF"
+        xmlns:local="clr-namespace:CoordinateGraphSample"
+        mc:Ignorable="d"
+        FontSize="16"
+        Title="MainWindow" Height="450" Width="800">
+
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="120" />
+        </Grid.ColumnDefinitions>
+        <d3:Chart BottomTitle="Argument" LeftTitle="Function" x:Name="myChart" IsShowCoordinateValue="True">
+            <Grid>
+                <d3:LineGraph Description="{Binding Lines[0].Description}" Stroke="{Binding Lines[0].Stroke}" StrokeThickness="{Binding Lines[0].StrokeThickness}" Points="{Binding Lines[0].Points}" />
+                <d3:LineGraph Description="{Binding Lines[1].Description}" Stroke="{Binding Lines[1].Stroke}" StrokeThickness="{Binding Lines[1].StrokeThickness}" Points="{Binding Lines[1].Points}"/>
+            </Grid>
+        </d3:Chart>
+        <StackPanel Grid.Column="1" Margin="10,0">
+            <Button Height="60" Content="动态新增" Command="{Binding AddLine2Command}"/>
+        </StackPanel>
+    </Grid>
+</Window>

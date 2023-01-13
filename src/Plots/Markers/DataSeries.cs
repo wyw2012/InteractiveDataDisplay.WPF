@@ -740,7 +740,7 @@ namespace InteractiveDataDisplay.WPF
         /// <summary>
         /// Gets the stroke of a parent <see cref="MarkerGraph"/> of <see cref="DataCollection"/>.
         /// </summary>
-        public SolidColorBrush Stroke
+        public Brush Stroke
         {
             get
             {
